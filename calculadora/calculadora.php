@@ -1,0 +1,38 @@
+<?php
+    $v1 = $_GET["a"];
+    $v2 = $_GET["b"];
+    $op = $_GET["op"];
+    $result = 0;
+
+    if($op == "+")
+        $result = $v1 + $v2;
+    elseif ($op == "-")
+        $result = $v1 - $v2;
+    elseif ($op == "*")
+        $result = $v1 * $v2;
+    elseif ($op == "/")
+        $result = $v1 / $v2;
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="calculadora.php" method="get" name="soma">
+    a:<input type="text" name="a">
+        <br>
+    o:<input type="text" name="op">
+        <br>
+    b:<input type="text" name="b">
+        <br>
+        <input type="submit" value="Calcular">
+    </form>
+
+    <br><br>
+    <?php echo"O resultado é: $result";
+    ?>
+</body>
+</html>

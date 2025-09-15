@@ -1,0 +1,9 @@
+matricula;nome;email
+56465156;jose pereira;ze@gmail.com
+123456;antonio neto;tonho@gmail.com
+
+123124;Yuri;yurilins@gmail.com
+21314215;Yuri;yurilins@gmail.com
+21314215;Yuri;yurilins@gmail.com
+21314215;Yuri;yurilins@gmail.com
+1234;dasda;dasda

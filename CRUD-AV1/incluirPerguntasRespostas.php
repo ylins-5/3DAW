@@ -2,25 +2,31 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $pergunta = $_POST["pergunta"];
     $id = $_POST["idPergunta"];
-    $a = $_POST["a"];
-    $b = $_POST["b"];
-    $c = $_POST["c"];
-    $d = $_POST["d"];
-    $e = $_POST["e"];
-    $correta = $_POST["resposta"];
+    $tipo = $_POST["tipo"]; 
 
-    $linha = $pergunta . ";". $id . ";" . $a . ";" . $b . ";" . $c . ";" . $d . ";" . $e . ";" . $correta . "\n";
+    if($tipo == "multipla"){
+        $a = $_POST["a"];
+        $b = $_POST["b"];
+        $c = $_POST["c"];
+        $d = $_POST["d"];
+        $e = $_POST["e"];
+        $correta = $_POST["resposta"];
+
+        $linha = $pergunta . ";" . $id . ";" . $tipo . ";" . $a . ";" . $b . ";" . $c . ";" . $d . ";" . $e . ";" . $correta . "\n";
+    } else {
+        $respostaTexto = $_POST["respostaTexto"];
+        $linha = $pergunta . ";" . $id . ";" . $tipo . ";" . $respostaTexto . "\n";
+    }
 
     if(!file_exists("perguntas.txt")){
         $arquivo = fopen("perguntas.txt", "w") or die ("Erro ao abrir arquivo!");
         fwrite($arquivo,$linha);
         fclose($arquivo);
     } else {
-    
         $arquivo = fopen("perguntas.txt", "a") or die ("Erro ao abrir arquivo!");
         fwrite($arquivo, $linha);
         fclose($arquivo);
-        $msg = "Deu tudo certo!";
+        $msg = "Pergunta incluída com sucesso!";
     }
 }
 ?>
@@ -29,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Incluir Perguntas e Respostas</title>
 </head>
 <body>
@@ -52,12 +57,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 <form action="incluirPerguntasRespostas.php" method="POST">
     Pergunta: <input type="text" name="pergunta"> <br>
     Id: <input type="text" name="idPergunta"> <br>
+    Tipo: 
+    <select name="tipo">
+        <option value="multipla">Múltipla Escolha</option>
+        <option value="texto">Resposta em Texto</option>
+    </select>
+    <br><br>
+
     Alternativa A: <input type="text" name="a"> <br>
     Alternativa B: <input type="text" name="b"> <br>
     Alternativa C: <input type="text" name="c"> <br>
     Alternativa D: <input type="text" name="d"> <br>
     Alternativa E: <input type="text" name="e"> <br>
     Alternativa correta: <input type="text" name="resposta"> <br>
+
+    Resposta Texto: <input type="text" name="respostaTexto"> <br>
+
     <input type="submit" value="Enviar">
 </form>
 </body>

@@ -26,36 +26,54 @@
 <tr>
     <th>Pergunta</th>
     <th>Id</th>
+    <th>Tipo</th>
     <th>Alternativa A</th>
     <th>Alternativa B</th>
     <th>Alternativa C</th>
     <th>Alternativa D</th>
     <th>Alternativa E</th>
     <th>Alternativa Correta</th>
+    <th>Resposta Texto</th>
 </tr>
 <?php
-$arquivo = fopen("perguntas.txt", "r") or die ("Erro ao abrir arquivo");
+if(file_exists("perguntas.txt")){
+    $arquivo = fopen("perguntas.txt", "r") or die("Erro ao abrir arquivo");
 
-if($arquivo){
     while(!feof($arquivo)){
         $linha = fgets($arquivo);
         if(empty(trim($linha))) continue;
 
         $dados = explode(";", trim($linha));
+        $tipo = $dados[2];
 
         echo "<tr>";
-        echo "<td>$dados[0]</td>";
-        echo "<td>$dados[1]</td>";
-        echo "<td>$dados[2]</td>";
-        echo "<td>$dados[3]</td>";
-        echo "<td>$dados[4]</td>";
-        echo "<td>$dados[5]</td>";
-        echo "<td>$dados[6]</td>";
-        echo "<td>$dados[7]</td>";
+        echo "<td>{$dados[0]}</td>"; 
+        echo "<td>{$dados[1]}</td>"; 
+        echo "<td>{$tipo}</td>";
+
+        if($tipo == "multipla"){
+            echo "<td>{$dados[3]}</td>"; 
+            echo "<td>{$dados[4]}</td>"; 
+            echo "<td>{$dados[5]}</td>"; 
+            echo "<td>{$dados[6]}</td>"; 
+            echo "<td>{$dados[7]}</td>"; 
+            echo "<td>{$dados[8]}</td>"; 
+            echo "<td>-</td>"; 
+        } else {
+            echo "<td>-</td>";
+            echo "<td>-</td>";
+            echo "<td>-</td>";
+            echo "<td>-</td>";
+            echo "<td>-</td>";
+            echo "<td>-</td>";
+            echo "<td>{$dados[3]}</td>"; 
+        }
+
         echo "</tr>";
     }
+
+    fclose($arquivo);
 }
-fclose($arquivo);
 ?>
 </table>
 </body>

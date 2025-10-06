@@ -1,0 +1,2 @@
+1 1?;1;multipla;3;2;6;5;3;B
+1 1?;1;texto;A resposta correta é 2.

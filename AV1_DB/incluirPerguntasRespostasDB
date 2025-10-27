@@ -1,0 +1,84 @@
+<?php
+    $servidor = "localhost";
+    $username = "root";
+    $senha = "";
+    $database = "ProvaDB";
+
+    $conn = new mysqli($servidor, $username, $senha, $database);
+
+    if ($conn->connect_error) {
+       die("Conexao falhou, avise o administrador do sistema");
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $pergunta = $_POST["pergunta"];
+        $id = $_POST["idPergunta"];
+        $tipo = $_POST["tipo"]; 
+        $msg = "";
+
+        if($tipo == "multipla"){
+            $a = $_POST["a"];
+            $b = $_POST["b"];
+            $c = $_POST["c"];
+            $d = $_POST["d"];
+            $e = $_POST["e"];
+            $correta = $_POST["resposta"];
+
+            $comandoSQL = "INSERT INTO perguntas (idPergunta, pergunta, tipo, a, b, c, d, e, correta)
+                           VALUES ('$id', '$pergunta', '$tipo', '$a', '$b', '$c', '$d', '$e', '$correta')";
+        } else {
+            $respostaTexto = $_POST["respostaTexto"];
+            $comandoSQL = "INSERT INTO perguntas (idPergunta, pergunta, tipo, respostaTexto)
+                           VALUES ('$id', '$pergunta', '$tipo', '$respostaTexto')";
+        }
+
+        $resultado = $conn->query($comandoSQL);
+
+        if ($resultado==true){
+            $retorno=json_encode($msg);
+        } else {
+            $retorno=json_encode("DEU RUIM!");
+        }
+
+    echo $retorno;
+  }
+
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Incluir Perguntas e Respostas</title>
+</head>
+<body>
+<header>
+    <ul>
+        <li><a href="incluirPerguntasRespostasDB.php">Incluir Perguntas e Respostas</a></li>
+    </ul>
+</header>
+
+<?php if (!empty($msg)) echo "<p>$msg</p>"; ?>
+
+<form action="incluirPerguntasRespostasDB.php" method="POST">
+    Pergunta: <input type="text" name="pergunta"> <br>
+    Id: <input type="text" name="idPergunta"> <br>
+    Tipo: 
+    <select name="tipo">
+        <option value="multipla">Múltipla Escolha</option>
+        <option value="texto">Resposta em Texto</option>
+    </select>
+    <br><br>
+
+    Alternativa A: <input type="text" name="a"> <br>
+    Alternativa B: <input type="text" name="b"> <br>
+    Alternativa C: <input type="text" name="c"> <br>
+    Alternativa D: <input type="text" name="d"> <br>
+    Alternativa E: <input type="text" name="e"> <br>
+    Alternativa correta: <input type="text" name="resposta"> <br>
+
+    Resposta Texto: <input type="text" name="respostaTexto"> <br>
+
+    <input type="submit" value="Enviar">
+</form>
+</body>
+</html>

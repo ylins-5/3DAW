@@ -1,0 +1,4 @@
+matricula;nome;modalidade;idade;email;
+167;raul;basquete;15;fe@gmail.com
+
+123;yuri;futebol;19;yurilins1332@gmail.com
